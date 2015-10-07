@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+E:\AndyMusicPlayer\AndyMusicPlayer\.metadata\.plugins\org.eclipse.jdt.core
+2427788378.index
+166560336.index
