@@ -32,7 +32,7 @@ public class MainActivity extends TabActivity {
         		.setContent(R.id.tv3)
         		);
         
-        mTabHost.setBackgroundResource(R.drawable.bg2);
+        //mTabHost.setBackgroundResource(R.drawable.bg2);
         
         mTabHost.setCurrentTab(0);
         
