@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -25,7 +25,7 @@
 	        <FrameLayout 
 	            android:id="@android:id/tabcontent"
 	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
+	            android:layout_height="match_parent"
 	            >
 	            <TextView
 	                 android:id="@+id/tv1"
@@ -52,33 +52,42 @@
 	    
 	
 	</TabHost>
-	
+
 	<LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	     >
-	    <Button
-	    android:id="@+id/prev"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="prev" />
-	    
-	    <Button
-	    android:id="@+id/start_pause"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="start" />
-	    
-	    <Button
-	    android:id="@+id/next"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="next" />
-	    
-	    
+	    android:layout_alignParentBottom="true"
+	    android:gravity="center"
+	    android:orientation="horizontal" >
+
+	    <ImageButton
+	        android:id="@+id/last"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/last"
+	         />
+
+	    <ImageButton
+	        android:id="@+id/stop"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/stop"
+	         />
+
+	    <ImageButton
+	        android:id="@+id/start"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/start"
+	         />
+
+	    <ImageButton
+	        android:id="@+id/next"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/next"
+	         />
 	    
 	</LinearLayout>
-
 	
-</LinearLayout>	
+</RelativeLayout>	
