@@ -30,11 +30,10 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="match_parent"
 	            >
-	            <TextView
+	            <ListView
 	                 android:id="@+id/tv1"
 	                 android:layout_width="fill_parent"
-	                 android:layout_height="fill_parent"
-	                 android:text="this is a tab"
+	                 android:layout_height="wrap_content"
 	                  />
 	             <TextView
 	                 android:id="@+id/tv2"

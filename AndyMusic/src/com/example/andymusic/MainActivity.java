@@ -1,5 +1,10 @@
 package com.example.andymusic;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Context;
@@ -10,21 +15,32 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
-public class MainActivity extends TabActivity {
+public class MainActivity extends TabActivity implements View.OnClickListener {
 
 	TabHost mTabHost;
 	
 	private ScrollTabView scrollTabsView;
 	private TabAdapter tabsAdapter;
-	private ViewPager viewPager;
-	private Context context;
+	private ViewPager viewPager = null;
+	private Context context = null;
 	
+	private ImageButton last = null;
+	private ImageButton next;
+	private ImageButton stop;
+	private ImageButton start;
+	private ListView lv1;
 	
-	
+	//播放列表
+	private List<String> mMusicList = new ArrayList<String>();
+	//音乐路径
+	private static final String MUSIC_PATH = new String("/外置存储卡/music/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +65,13 @@ public class MainActivity extends TabActivity {
         		.setContent(R.id.tv3)
         		);
         
-        //mTabHost.setBackgroundResource(R.drawable.bg2);
+        mTabHost.setCurrentTab(1);   
         
-        mTabHost.setCurrentTab(0);
+        last = (ImageButton)findViewById(R.id.last);
+        next = (ImageButton)findViewById(R.id.next);
+        stop = (ImageButton)findViewById(R.id.stop);
+        start = (ImageButton)findViewById(R.id.start);
+        lv1 = (ListView)findViewById(R.id.tv1);
         
         mTabHost.setOnTabChangedListener(new OnTabChangeListener(){
 
@@ -63,6 +83,34 @@ public class MainActivity extends TabActivity {
         	
         });
     }
+    
+    //播放列表
+    public void musicList(){
+    	//取得指定位置的文件，设置显示到播放列表
+    	File home = new File(MUSIC_PATH);
+    	if(home.listFiles(new MusicFilter()).length > 0){
+    		for(File file : home.listFiles(new MusicFilter())){
+    			mMusicList.add(file.getName());
+    		}
+    		ArrayAdapter<String> musicList = new ArrayAdapter<String>(MainActivity.this,R.id.tv1,mMusicList);
+    	}
+    }
+    
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch(v.getId()){
+		case R.id.last:
+			break;
+		case R.id.stop:
+			break;
+		case R.id.start:
+			break;
+		case R.id.next:
+			break;
+		}
+	}
+    
     
     void initTabs(){
     	scrollTabsView = (ScrollTabView)findViewById(R.id.tabs1);
@@ -98,10 +146,18 @@ public class MainActivity extends TabActivity {
     		
     	};
     	
-    	//MyFragment f1 = new MyFragment("最近");
+    	//MyFragment f1 = new MyFragment("最近");	
+    }
+
+    class MusicFilter implements FilenameFilter{
+
+		@Override
+		public boolean accept(File dir, String filename) {
+			// TODO Auto-generated method stub
+			return (filename.endsWith(".mp3"));
+		}
     	
     }
-    
     
     
 }
