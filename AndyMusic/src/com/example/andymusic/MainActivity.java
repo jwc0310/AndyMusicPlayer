@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 	//播放列表
 	private List<String> mMusicList = new ArrayList<String>();
 	//音乐路径
-	private static final String MUSIC_PATH = new String("/外置存储卡/music/");
+	private static final String MUSIC_PATH = new String("/storage/sdcard1/music/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,13 +66,20 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         		.setContent(R.id.tv3)
         		);
         
-        mTabHost.setCurrentTab(1);   
+        mTabHost.setCurrentTab(0);
         
         last = (ImageButton)findViewById(R.id.last);
         next = (ImageButton)findViewById(R.id.next);
         stop = (ImageButton)findViewById(R.id.stop);
         start = (ImageButton)findViewById(R.id.start);
+
+        start.setOnClickListener(this);
+        last.setOnClickListener(this);
+        next.setOnClickListener(this);
+        stop.setOnClickListener(this);
+
         lv1 = (ListView)findViewById(R.id.tv1);
+        musicList();
         
         mTabHost.setOnTabChangedListener(new OnTabChangeListener(){
 
@@ -88,12 +96,21 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     public void musicList(){
     	//取得指定位置的文件，设置显示到播放列表
     	File home = new File(MUSIC_PATH);
-    	if(home.listFiles(new MusicFilter()).length > 0){
-    		for(File file : home.listFiles(new MusicFilter())){
+    	File[] files = home.listFiles(new MusicFilter());
+
+    	if(files.length > 0){
+    		for(File file :files){
+    			Log.i("Andy", file.getName());
     			mMusicList.add(file.getName());
     		}
-    		ArrayAdapter<String> musicList = new ArrayAdapter<String>(MainActivity.this,R.id.tv1,mMusicList);
+
+    		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,mMusicList);
+    		lv1.setAdapter(adapter);
+
+    	}else{
+    		Log.i("Andy", "Please add read storage permission or check the path");
     	}
+
     }
     
 	@Override
@@ -101,12 +118,17 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 		// TODO Auto-generated method stub
 		switch(v.getId()){
 		case R.id.last:
+			Log.i("Andy", "Last button is clicked !");
 			break;
 		case R.id.stop:
+			Log.i("Andy", "Stop button is clicked !");
 			break;
 		case R.id.start:
+			Log.i("Andy", "Start button is clicked !");
+			Log.i("Andy", "Start button is clicked 2 !");
 			break;
 		case R.id.next:
+			Log.i("Andy", "Next button is clicked !");
 			break;
 		}
 	}
@@ -146,7 +168,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     		
     	};
     	
-    	//MyFragment f1 = new MyFragment("最近");	
     }
 
     class MusicFilter implements FilenameFilter{
