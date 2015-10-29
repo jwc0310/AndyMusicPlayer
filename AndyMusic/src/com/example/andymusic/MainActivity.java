@@ -10,6 +10,8 @@ import com.musicplayer.andymusic.AndyMusicPlayer;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
@@ -139,11 +141,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 		switch(v.getId()){
 		case R.id.last:
 			Log.i("Andy", "Last button is clicked !");
-			if(--currentListItem < 0){
-				currentListItem = 0;
-				Toast.makeText(this, "this is the first song", Toast.LENGTH_SHORT).show();
-			}
-			mPlayer.playMusic(MUSIC_PATH+mMusicList.get(currentListItem));
+			lastMusic();
 			break;
 		case R.id.stop:
 			Log.i("Andy", "Stop button is clicked !");
@@ -152,18 +150,37 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 		case R.id.start:
 			Log.i("Andy", "Start button is clicked !");
 			mPlayer.pauseMusic();
+			mPlayer.setOnCompletionListener(new OnCompletionListener(){
+
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					// TODO Auto-generated method stub
+					nextMusic();
+				}
+				
+			});
 			break;
 		case R.id.next:
 			Log.i("Andy", "Next button is clicked !");
-			if(++currentListItem >mMusicList.size()-1){
-				currentListItem = mMusicList.size()-1;
-				Toast.makeText(this, "this is the last song", Toast.LENGTH_SHORT).show();
-			}
-			mPlayer.playMusic(MUSIC_PATH+mMusicList.get(currentListItem));
+			nextMusic();
 			break;
 		}
 	}
-    
+	
+	private void nextMusic(){
+		if(++currentListItem >mMusicList.size()-1){
+			currentListItem = 0;
+			Toast.makeText(this, "this is the last song", Toast.LENGTH_SHORT).show();
+		}
+		mPlayer.playMusic(MUSIC_PATH+mMusicList.get(currentListItem));
+	}
+    private void lastMusic(){
+    	if(--currentListItem < 0){
+			currentListItem = mMusicList.size()-1;
+			Toast.makeText(this, "this is the first song", Toast.LENGTH_SHORT).show();
+		}
+		mPlayer.playMusic(MUSIC_PATH+mMusicList.get(currentListItem));
+    }
     
     void initTabs(){
     	scrollTabsView = (ScrollTabView)findViewById(R.id.tabs1);
